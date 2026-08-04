@@ -71,6 +71,7 @@ export default function ProjectCarousel({ media, title }: ProjectCarouselProps) 
                   src={item.src}
                   alt={item.alt}
                   fill
+                  sizes="100vw"
                   className="object-cover"
                 />
               ) : (

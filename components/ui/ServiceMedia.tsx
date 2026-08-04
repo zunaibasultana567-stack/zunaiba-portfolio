@@ -69,6 +69,7 @@ export default function ServiceMedia({ media, title }: ServiceMediaProps) {
         src={media.src}
         alt={`${title} example output`}
         fill
+        sizes="(min-width: 1024px) 50vw, 100vw"
         className="object-cover"
       />
     </div>

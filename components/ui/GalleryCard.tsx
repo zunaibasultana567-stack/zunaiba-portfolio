@@ -44,6 +44,11 @@ export default function GalleryCard({ item, variant = "marquee" }: GalleryCardPr
         width={variant === "marquee" ? item.width : undefined}
         height={variant === "marquee" ? item.height : undefined}
         fill={variant === "grid"}
+        sizes={
+          variant === "grid"
+            ? "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            : undefined
+        }
         className={variant === "marquee" ? marqueeSizeClasses : gridSizeClasses}
       />
     ) : (

@@ -99,6 +99,16 @@ export default function Contact() {
     setStatus("form");
   };
 
+  // Navigating here from another page (e.g. "/services#contact") is a
+  // client-side transition, but content loading further up the homepage can
+  // still shift the layout after the initial scroll. Re-assert the scroll
+  // position once this section has mounted so the CTA reliably lands here.
+  useEffect(() => {
+    if (window.location.hash === "#contact") {
+      document.getElementById("contact")?.scrollIntoView();
+    }
+  }, []);
+
   return (
     <section
       id="contact"
