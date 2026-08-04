@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import { Service } from "@/data/services";
+import { useInView } from "@/hooks/useInView";
 
 interface ServiceMediaProps {
   media: Service["media"];
@@ -15,15 +16,20 @@ const isVideoSrc = (src: string) => src.endsWith(".mp4");
  * audio but start at a moderate volume rather than full blast, so playback
  * stays visitor-initiated rather than interrupting. Autoplay videos start
  * muted and looping (browsers block unmuted autoplay), with controls so a
- * visitor can unmute if they want sound. */
+ * visitor can unmute if they want sound. The video `src` itself is only
+ * attached once the card scrolls into view, so it doesn't start downloading
+ * on page load. */
 export default function ServiceMedia({ media, title }: ServiceMediaProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const { ref: videoRef, inView } = useInView<HTMLVideoElement>();
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.volume = 0.4;
+    const video = videoRef.current;
+    if (!video) return;
+    video.volume = 0.4;
+    if (inView && media.autoPlay) {
+      video.play().catch(() => {});
     }
-  }, []);
+  }, [inView, videoRef, media.autoPlay]);
 
   if (!media.src) return null;
 
@@ -33,8 +39,9 @@ export default function ServiceMedia({ media, title }: ServiceMediaProps) {
         {media.autoPlay ? (
           <video
             ref={videoRef}
-            src={media.src}
-            autoPlay
+            src={inView ? media.src : undefined}
+            poster={media.poster}
+            preload="none"
             muted
             loop
             playsInline
@@ -44,7 +51,9 @@ export default function ServiceMedia({ media, title }: ServiceMediaProps) {
         ) : (
           <video
             ref={videoRef}
-            src={media.src}
+            src={inView ? media.src : undefined}
+            poster={media.poster}
+            preload="none"
             controls
             playsInline
             className="absolute inset-0 h-full w-full object-cover"

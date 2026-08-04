@@ -30,6 +30,8 @@ export interface Service {
     height?: number;
     /** Video only: autoplay muted and looping instead of waiting for a click. */
     autoPlay?: boolean;
+    /** Video only: still frame shown until the card scrolls into view and the video loads. */
+    poster?: string;
   };
   /** "service" = a purchasable deliverable; "tool" = part of the toolkit, not sold directly. */
   category: "service" | "tool";
@@ -61,7 +63,11 @@ export const services: Service[] = [
     longDescription:
       "Get a polished short promo, social, or explainer video without a film crew. I generate the clip with tools like Runway, Pika, and Sora, then edit it in CapCut or Premiere, trimming scenes and adding captions and music, so it's ready to publish.",
     icon: "Video",
-    media: { kind: "video", src: "/videos/services/ai-video-generation.mp4" },
+    media: {
+      kind: "video",
+      src: "/videos/services/ai-video-generation.mp4",
+      poster: "/videos/services/ai-video-generation-poster.jpg",
+    },
     category: "service",
     result: "Result: a publish-ready clip in a few days, not weeks.",
     price: "Custom quote",
@@ -85,7 +91,12 @@ export const services: Service[] = [
     longDescription:
       "Claude can generate and refine visuals directly from a prompt, and connect to apps you already use, like Google Docs, PDFs, or Canva, to build inside them for you. It can also take a task and a deadline and carry the work out on its own, the same way I set up hands-off automation with n8n.",
     icon: "Bot",
-    media: { kind: "image-or-video", src: "/videos/services/claude-ai-assistant.mp4", autoPlay: true },
+    media: {
+      kind: "image-or-video",
+      src: "/videos/services/claude-ai-assistant.mp4",
+      autoPlay: true,
+      poster: "/videos/services/claude-ai-assistant-poster.jpg",
+    },
     category: "tool",
   },
   {
@@ -137,7 +148,12 @@ export const services: Service[] = [
     longDescription:
       "Get a fully custom, production-ready website, not a template. I design and prototype the layout in Framer, then build the real, coded site in VS Code. This keeps the design phase fast while the final build stays genuinely custom.",
     icon: "Globe",
-    media: { kind: "video", src: "/videos/services/ai-web-development.mp4", autoPlay: true },
+    media: {
+      kind: "video",
+      src: "/videos/services/ai-web-development.mp4",
+      autoPlay: true,
+      poster: "/videos/services/ai-web-development-poster.jpg",
+    },
     category: "service",
     result: "Result: a custom site, live and production-ready.",
     price: "Custom quote",

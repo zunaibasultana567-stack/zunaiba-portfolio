@@ -13,6 +13,8 @@ export interface GalleryItem {
   alt: string;
   /** Short category label shown as a caption overlay on the card. */
   category: string;
+  /** Video only: still frame shown until the card scrolls into view and the video loads. */
+  poster?: string;
 }
 
 export const galleryItems: GalleryItem[] = [
@@ -21,10 +23,10 @@ export const galleryItems: GalleryItem[] = [
   { id: "gallery-3", type: "image", src: "/images/gallery/gallery-3.png", width: 1907, height: 832, alt: "Salon booking website design", category: "Web Design" },
   { id: "gallery-4", type: "image", src: "/images/gallery/gallery-4.png", width: 1024, height: 1536, alt: "AI-generated product ad", category: "Branding Project" },
   { id: "gallery-5", type: "image", src: "/images/gallery/gallery-5.png", width: 1911, height: 821, alt: "Automated Google Sheets data pipeline", category: "Automation Workflow" },
-  { id: "gallery-6", type: "video", src: "/videos/gallery/gallery-6.mp4", alt: "Automation workflow demo recording", category: "Automation Workflow" },
-  { id: "gallery-7", type: "video", src: "/videos/gallery/gallery-7.mp4", alt: "AI-generated stock chart animation", category: "Automation Workflow" },
+  { id: "gallery-6", type: "video", src: "/videos/gallery/gallery-6.mp4", poster: "/videos/gallery/gallery-6-poster.jpg", alt: "Automation workflow demo recording", category: "Automation Workflow" },
+  { id: "gallery-7", type: "video", src: "/videos/gallery/gallery-7.mp4", poster: "/videos/gallery/gallery-7-poster.jpg", alt: "AI-generated stock chart animation", category: "Automation Workflow" },
   { id: "gallery-8", type: "image", src: "/images/gallery/gallery-8.png", width: 1917, height: 847, alt: "AI lead-qualification system", category: "Automation Workflow" },
   { id: "gallery-9", type: "image", src: "/images/gallery/gallery-9.jpg", width: 1024, height: 1024, alt: "AI-generated video thumbnail", category: "AI Image Generation" },
-  { id: "gallery-10", type: "video", src: "/videos/gallery/gallery-10.mp4", alt: "Cinematic AI-generated promotional video for an ebook", category: "Automation Workflow" },
+  { id: "gallery-10", type: "video", src: "/videos/gallery/gallery-10.mp4", poster: "/videos/gallery/gallery-10-poster.jpg", alt: "Cinematic AI-generated promotional video for an ebook", category: "Automation Workflow" },
   { id: "gallery-11", type: "image", src: "/images/gallery/gallery-11.png", width: 1902, height: 913, alt: "Habit-tracker web app UI", category: "Web Development" },
 ];

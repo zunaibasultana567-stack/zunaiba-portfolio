@@ -49,7 +49,9 @@ export default function GalleryCard({ item, variant = "marquee" }: GalleryCardPr
     ) : (
       <video
         ref={ref}
-        src={item.src}
+        src={inView ? item.src : undefined}
+        poster={item.poster}
+        preload="none"
         muted
         loop
         playsInline

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import clsx from "clsx";
 import { ProjectMedia } from "@/data/projects";
@@ -64,13 +65,13 @@ export default function ProjectCarousel({ media, title }: ProjectCarouselProps) 
           style={{ transform: `translateX(-${index * 100}%)` }}
         >
           {media.map((item, i) => (
-            <div key={item.src} className="h-full w-full shrink-0">
+            <div key={item.src} className="relative h-full w-full shrink-0">
               {item.type === "image" ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={item.src}
                   alt={item.alt}
-                  className="h-full w-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               ) : (
                 <video
