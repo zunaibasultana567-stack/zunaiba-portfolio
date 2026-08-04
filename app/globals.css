@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/* Design tokens — see my-app/docs/Design/SKILL.md before changing these */
+:root {
+  --bg-light: #ffffff;
+  --accent: #1e3a5f;
+  --text-dark: #1a1a1a;
+  --text-light: #ffffff;
+  --text-muted: #6b6b6b;
+  --link-accent: #1e3a5f;
+  --accent-light: #5b8ec4;
+  --terracotta: #c1662d;
+
+  /* Pastel feature-card tints */
+  --card-pink: #feedfd;
+  --card-gray: #e7eaec;
+  --card-blue: #dceefe;
+  --card-lavender: #eae4f7;
+  --card-mint: #e2f3e7;
+
+  /* Pill-shaped form field fill */
+  --input-bg: #f2f2f2;
+
+  /* Gradient border stops (VIP-style card accent) */
+  --gradient-start: #ef9db3;
+  --gradient-mid: #d9a468;
+  --gradient-end: #8fae5c;
+
+  /* Dark charcoal footer — the ONLY place these are used */
+  --bg-dark: #1c1b19;
+  --text-on-dark: #f5f4f2;
+  --text-on-dark-muted: #9a9793;
+
+  /* Page default */
+  --background: var(--bg-light);
+  --foreground: var(--text-dark);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-bg-light: var(--bg-light);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-terracotta: var(--terracotta);
+  --color-text-dark: var(--text-dark);
+  --color-text-light: var(--text-light);
+  --color-muted: var(--text-muted);
+  --color-link-accent: var(--link-accent);
+  --color-card-pink: var(--card-pink);
+  --color-card-gray: var(--card-gray);
+  --color-card-blue: var(--card-blue);
+  --color-card-lavender: var(--card-lavender);
+  --color-card-mint: var(--card-mint);
+  --color-input-bg: var(--input-bg);
+  --color-gradient-start: var(--gradient-start);
+  --color-gradient-mid: var(--gradient-mid);
+  --color-gradient-end: var(--gradient-end);
+  --color-bg-dark: var(--bg-dark);
+  --color-text-on-dark: var(--text-on-dark);
+  --color-text-on-dark-muted: var(--text-on-dark-muted);
+  --font-sans: var(--font-onest);
+
+  /* Hero entrance animation, registered as the `animate-fade-slide-up` utility */
+  --animate-fade-slide-up: fade-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  /* Horizontal auto-scroll loop, registered as the `animate-marquee` utility */
+  --animate-marquee: marquee 30s linear infinite;
+}
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+}
+
+/* Gradient border (padding-box/border-box double background), since Tailwind
+   v4 has no built-in gradient-border utility. */
+.gradient-border {
+  border: 2px solid transparent;
+  border-radius: 1.5rem;
+  background:
+    linear-gradient(var(--bg-light), var(--bg-light)) padding-box,
+    linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end)) border-box;
+}
+
+/* Decorative gradient ring around the Hero profile photo. Shadow color is a
+   fixed rgba matching --accent's current navy — update it here too if
+   --accent ever changes hue. */
+.profile-ring {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 50%, var(--accent) 100%);
+  box-shadow: 0 0 45px -10px rgba(30, 58, 95, 0.5);
+  transition: box-shadow 500ms ease, transform 500ms ease;
+}
+.profile-ring:hover {
+  box-shadow: 0 0 60px -6px rgba(30, 58, 95, 0.65);
+  transform: scale(1.02);
+}
+
+/* Soft pulsing light behind the Hero profile photo. */
+.profile-glow {
+  background: radial-gradient(circle, var(--accent-light) 0%, var(--accent) 55%, transparent 75%);
+  filter: blur(48px);
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
