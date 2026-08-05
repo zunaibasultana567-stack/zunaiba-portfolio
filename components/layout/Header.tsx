@@ -49,9 +49,9 @@ export default function Header() {
     <header className="sticky top-0 z-40 border-b border-text-dark/10 bg-bg-light">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-2 sm:px-12">
         <Link href="/" aria-label={`${siteInfo.name} home`} className="shrink-0">
-          {/* TODO: swap public/images/logo.png for a new file whenever you update your logo */}
+          {/* TODO: swap public/images/logo-zs.png for a new file whenever you update your logo */}
           <Image
-            src="/images/logo.png"
+            src="/images/logo-zs.png"
             alt={`${siteInfo.name} logo`}
             width={72}
             height={72}

@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 text-center sm:flex-row sm:justify-between sm:text-left">
         <div className="flex items-center gap-3">
           <Image
-            src="/images/logo.png"
+            src="/images/logo-zs.png"
             alt={`${siteInfo.name} logo`}
             width={40}
             height={40}
