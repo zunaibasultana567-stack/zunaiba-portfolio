@@ -29,8 +29,6 @@ const iconMap: Record<Service["icon"], LucideIcon> = {
   Workflow,
 };
 
-const cardTints = ["bg-card-pink", "bg-card-blue", "bg-card-gray", "bg-card-lavender", "bg-card-mint"];
-
 /** Brief service cards on the homepage, each linking to the full /services page. */
 export default function ServicesOverview() {
   return (
@@ -51,9 +49,7 @@ export default function ServicesOverview() {
               <ScrollReveal
                 key={service.id}
                 delay={i * 60}
-                className={`group rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1 ${
-                  cardTints[i % cardTints.length]
-                }`}
+                className="group rounded-2xl border-2 border-accent bg-white p-6 transition-transform duration-300 hover:-translate-y-1"
               >
                 <Link href={`/services#${service.id}`} className="block">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-text-light">
