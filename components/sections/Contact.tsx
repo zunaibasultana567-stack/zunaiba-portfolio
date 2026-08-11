@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import clsx from "clsx";
-import { PartyPopper } from "lucide-react";
+import { PartyPopper, TriangleAlert } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import SocialLinks from "@/components/ui/SocialLinks";
 
@@ -59,7 +59,7 @@ export default function Contact() {
   const [values, setValues] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
-  const [status, setStatus] = useState<"form" | "success">("form");
+  const [status, setStatus] = useState<"form" | "success" | "error">("form");
 
   const updateField = (field: keyof typeof values, value: string) => {
     const nextValues = { ...values, [field]: value };
@@ -67,32 +67,44 @@ export default function Contact() {
     if (submitted) setErrors(validate(nextValues));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
     const nextErrors = validate(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    // Fired in the background: a no-cors response is opaque anyway, so
-    // awaiting it before showing success would only add latency (Apps
-    // Script cold starts can take a few seconds) without giving us any
-    // extra confidence.
-    fetch(process.env.NEXT_PUBLIC_GAS_URL as string, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({
-        name: values.name,
-        email: values.email,
-        message: values.message,
-      }),
-    }).catch((err) => console.error("Contact form submission failed:", err));
+    const gasUrl = process.env.NEXT_PUBLIC_GAS_URL;
+    if (!gasUrl) {
+      console.error("Contact form submission failed: NEXT_PUBLIC_GAS_URL is not set.");
+      setStatus("error");
+      return;
+    }
 
-    setValues({ name: "", email: "", message: "" });
-    setErrors({});
-    setSubmitted(false);
-    setStatus("success");
+    try {
+      // mode: "no-cors" makes the response opaque, so a resolved promise only
+      // confirms the request reached the network layer, not that the Apps
+      // Script actually processed it — but a thrown error (bad/missing URL,
+      // offline, DNS failure) is still real signal worth surfacing instead of
+      // silently claiming success.
+      await fetch(gasUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          message: values.message,
+        }),
+      });
+      setValues({ name: "", email: "", message: "" });
+      setErrors({});
+      setSubmitted(false);
+      setStatus("success");
+    } catch (err) {
+      console.error("Contact form submission failed:", err);
+      setStatus("error");
+    }
   };
 
   const handleBack = () => {
@@ -214,7 +226,7 @@ export default function Contact() {
                   </button>
                 </form>
               </FadeSwap>
-            ) : (
+            ) : status === "success" ? (
               <FadeSwap id="success">
                 <div className="flex flex-col items-center py-4 text-center">
                   <span className="flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-accent">
@@ -229,6 +241,28 @@ export default function Contact() {
                     review it and follow up soon with next steps.
                   </p>
                   <p className="mt-2 text-text-dark/70">Have a wonderful day!</p>
+                  <button
+                    type="button"
+                    onClick={handleBack}
+                    className="mt-7 rounded-full border border-text-dark/15 px-6 py-3 text-sm font-medium text-text-dark transition-transform hover:-translate-y-0.5"
+                  >
+                    Back
+                  </button>
+                </div>
+              </FadeSwap>
+            ) : (
+              <FadeSwap id="error">
+                <div className="flex flex-col items-center py-4 text-center">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/10 text-red-600">
+                    <TriangleAlert size={28} aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-5 text-2xl font-semibold text-text-dark">
+                    Something went wrong
+                  </h3>
+                  <p className="mt-3 text-text-dark/70">
+                    Your message couldn&apos;t be sent. Please try again in a
+                    moment, or reach out directly using the links above.
+                  </p>
                   <button
                     type="button"
                     onClick={handleBack}
