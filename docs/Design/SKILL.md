@@ -48,7 +48,7 @@ never from alternating full-bleed background colors, with one deliberate
 exception: the footer is dark charcoal (`--bg-dark`) while every other
 section stays light. Don't extend the dark treatment to any other section.
 
-These live as CSS custom properties in `my-app/app/globals.css`, wired into
+These live as CSS custom properties in `app/globals.css`, wired into
 Tailwind v4 utilities via the config-free `@theme inline` block (this repo
 has no `tailwind.config.*`).
 

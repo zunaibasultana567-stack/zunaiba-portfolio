@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Design tokens — see my-app/docs/Design/SKILL.md before changing these */
+/* Design tokens — see docs/Design/SKILL.md before changing these */
 :root {
   --bg-light: #ffffff;
   --accent: #1e3a5f;
