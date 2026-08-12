@@ -17,7 +17,7 @@ export default function Hero() {
           style={{ animationDelay: "0ms" }}
         >
           <Image
-            src="/images/profile-v3.png"
+            src="/images/profile-v4.png"
             alt={siteInfo.name}
             width={560}
             height={560}
